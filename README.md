@@ -4,6 +4,7 @@ Kotlin code example for android projects.
 ## Compose example as list
 ![Screenshot_1627898028](https://user-images.githubusercontent.com/14831652/127842919-cca906dc-b2f5-4452-a26f-d467b5a06d38.png)
 
+-
 ## Activity life cycle
 ### Navigation between two activity
 Main Activity-> click on second activity button->
