@@ -9,12 +9,12 @@
 ## Github Users List by given name
 - Show Users from Local
 - TODO load user from github api
-  ![Screenshot_1709913809](https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/fe1d7aea-31f5-4d2f-bb5f-2aa39bf3a913)
+  <img width="200" alt="Screenshot 2024-03-09 at 1 41 14" src="https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/b528827b-7729-4d5c-ae89-a1f004ff01cf">
 
 ## Show repositories list for selected user
 - Show Repositories of Selected User from Local
 - TODO load repository from github api
-  ![Screenshot_1709913814](https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/431ad656-08a1-4f6b-b7cf-fe8ee4f5ebc6)
+  <img width="200" alt="Screenshot 2024-03-09 at 1 41 01" src="https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/7364bf51-5f6e-4b95-b53e-5133233d6ca5">
 
 ## Mock Data for Testing
 - Documentation https://mockk.io/
@@ -22,7 +22,7 @@
 ## How to Use Resources
 ### How to Use Color
 - Defined in `com.example.clean.ui.theme.Theme.kt` file.
-- Example: `MaterialTheme.colorScheme.background`
+- Use as: `style = MaterialTheme.colorScheme.background`
 
 ### How to Use Font Size
 - Defined in `com.example.clean.ui.theme.Typography.kt` file.
