@@ -5,6 +5,13 @@
 - Use API for Features
 - Fix Search Repository when selecting the second user
 
+## Technology
+- Android room local database
+- Android MVVM Architecture
+- Android State Flow
+- Android ViewModel
+
+
 # Features
 ## Github Users List by given name
 - Show Users from Local

@@ -2,6 +2,7 @@ package com.example.clean.ui.features.users
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.example.clean.domain.model.User
 import com.example.clean.ui.components.HorizontalDivider
 import com.example.clean.ui.theme.AppLightTheme
+import timber.log.Timber
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -42,41 +44,37 @@ fun UsersListView(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserListItem(user: User, onItemClick: (User) -> Unit) {
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primaryContainer)
-            .padding(1.dp),
-        shape = RoundedCornerShape(0.dp),
-        onClick = { onItemClick(user) }
-    ) {
-        Row(
-            modifier = Modifier.padding(1.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // TODO add actual image from url
-            Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = "User Avatar",
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.size(64.dp),
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(
-                    text = user.login,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = "Score: ${user.score}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
+            .clickable {
+                Timber.d("User clicked: ${user.login}")
+                onItemClick(user)
             }
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Default.Person,
+            contentDescription = "User Avatar",
+            tint = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.size(64.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column {
+            Text(
+                text = user.login,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = "Score: ${user.score}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            )
         }
     }
 }
