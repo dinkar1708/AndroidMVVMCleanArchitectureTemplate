@@ -30,25 +30,44 @@ class UserRepositoryImpl @Inject constructor(
                 localDataSource.observeAll()
                     .map { entities -> entities.toExternal() }
                     .collect { repositories ->
-                        emit(ResultState.Error(CustomError(localErrorCode = LocalErrorCodes.DATA_NOT_FOUND, errorMessage = "e.localizedMessage")))
-//                        emit(ResultState.Success(repositories))
+                        if (repositories.isEmpty()) {
+                            emit(
+                                ResultState.Error(
+                                    CustomError(
+                                        localErrorCode = LocalErrorCodes.DATA_NOT_FOUND,
+                                        errorMessage = "No data found"
+                                    )
+                                )
+                            )
+                        } else {
+                            emit(ResultState.Success(repositories))
+                        }
                     }
-
             } catch (e: Exception) {
                 Timber.e(e, "Error fetching user repositories ${e.message}")
-                emit(ResultState.Error(CustomError(localErrorCode = LocalErrorCodes.DATA_NOT_FOUND, errorMessage = e.localizedMessage)))
+                // Fallback to "Unknown error" if localizedMessage is null
+                emit(
+                    ResultState.Error(
+                        CustomError(
+                            localErrorCode = LocalErrorCodes.DATA_NOT_FOUND,
+                            errorMessage = e.message ?: "Unknown error"
+                        )
+                    )
+                )
             }
         }
     }
 
 
+
     override suspend fun refreshUserRepositories(login: String) {
         Timber.d("refreshUserRepositories....$login")
         withContext(dispatcher) {
-            networkDataSource.refreshUserRepositories(login).userRepositories.toLocal().let { localRepos ->
-                Timber.d("Got save data $localRepos")
-                localDataSource.upsertAll(localRepos)
-            }
+            networkDataSource.refreshUserRepositories(login).userRepositories.toLocal()
+                .let { localRepos ->
+                    Timber.d("Got save data $localRepos")
+                    localDataSource.upsertAll(localRepos)
+                }
         }
     }
 }

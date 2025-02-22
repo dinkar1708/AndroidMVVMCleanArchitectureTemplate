@@ -26,25 +26,30 @@ class UserRepoScreenViewModel @Inject constructor(
     fun getUserRepositories(user: User) = viewModelScope.launch(dispatcher) {
         _uiState.value = UserRepoViewState(isLoading = true)
 
-        userRepositoryUseCase.searchUserRepositories(user.login).collectLatest { result ->
-            when (result) {
-                is ResultState.Success -> {
-                    _uiState.value = UserRepoViewState(
-                        selectedUser = user,
-                        repositories = result.data,
-                        isLoading = false
-                    )
-                }
-                is ResultState.Error -> {
-                    val errorMessage = when {
-                        result.error.apiErrorCode != null -> "API Error ${result.error.apiErrorCode.code}: ${result.error.errorMessage}"
-                        result.error.localErrorCode != null -> "Local Error ${result.error.localErrorCode.code}: ${result.error.errorMessage}"
-                        else -> result.error.errorMessage
+        viewModelScope.launch {
+
+            userRepositoryUseCase.searchUserRepositories(user.login).collectLatest { result ->
+                when (result) {
+                    is ResultState.Success -> {
+                        val repositories = result.data
+                        _uiState.value = UserRepoViewState(
+                            selectedUser = user,
+                            repositories = repositories,
+                            isLoading = false
+                        )
                     }
-                    _uiState.value = UserRepoViewState(
-                        errorMessage = errorMessage,
-                        isLoading = false
-                    )
+
+                    is ResultState.Error -> {
+                        val errorMessage = when {
+                            result.error.apiErrorCode != null -> "API Error ${result.error.apiErrorCode.code}: ${result.error.errorMessage}"
+                            result.error.localErrorCode != null -> "Local Error ${result.error.localErrorCode.code}: ${result.error.errorMessage}"
+                            else -> result.error.errorMessage
+                        }
+                        _uiState.value = UserRepoViewState(
+                            errorMessage = errorMessage,
+                            isLoading = false
+                        )
+                    }
                 }
             }
         }
