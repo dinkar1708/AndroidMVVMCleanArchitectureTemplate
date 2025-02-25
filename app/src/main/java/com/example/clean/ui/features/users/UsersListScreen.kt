@@ -50,7 +50,7 @@ fun UsersListScreenContent(
         AppActionBarView(
             modifier = Modifier
                 .fillMaxWidth(),
-            headerText = "Test",
+            headerText = "Github Users",
             showBackButton = false
         )
 

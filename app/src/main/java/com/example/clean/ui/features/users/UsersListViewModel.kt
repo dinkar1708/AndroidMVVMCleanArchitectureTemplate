@@ -2,6 +2,7 @@ package com.example.clean.ui.features.users
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.clean.data.ResultState
 import com.example.clean.di.DefaultDispatcher
 import com.example.clean.domain.usecase.SearchRepositoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,8 +10,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,25 +27,31 @@ class UsersListViewModel @Inject constructor(
     }
 
     private fun loadUsers() = viewModelScope.launch(dispatcher) {
-        _uiState.update { UsersListState(isLoading = true) }
+        _uiState.value = UsersListState(isLoading = true)
 
-        searchRepositoryUseCase.searchUsers()
-            .catch { exception ->
-                _uiState.update {
-                    UsersListState(
-                        errorMessage = exception.localizedMessage
-                            ?: "Error searching user list", // TODO: user string resource
+        searchRepositoryUseCase.searchUsers().collectLatest { result ->
+            when (result) {
+                is ResultState.Success -> {
+                    _uiState.value = UsersListState(
+                        userList = result.data,
+                        isLoading = false
+                    )
+                }
+                is ResultState.Error -> {
+                    val errorMessage = when {
+                        result.error.apiErrorCode != null ->
+                            "API Error ${result.error.apiErrorCode.code}: ${result.error.errorMessage}"
+                        result.error.localErrorCode != null ->
+                            "Local Error ${result.error.localErrorCode.code}: ${result.error.errorMessage}"
+                        else -> result.error.errorMessage
+                    }
+                    _uiState.value = UsersListState(
+                        errorMessage = errorMessage,
                         isLoading = false
                     )
                 }
             }
-            .collect { userList ->
-                _uiState.update {
-                    UsersListState(
-                        userList = userList,
-                        isLoading = false
-                    )
-                }
-            }
+        }
     }
+
 }
