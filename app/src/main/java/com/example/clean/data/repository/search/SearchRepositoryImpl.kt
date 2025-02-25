@@ -49,12 +49,13 @@ class SearchRepositoryImpl @Inject constructor(
                 ResultState.Error(
                     CustomError(
                         localErrorCode = LocalErrorCodes.DATA_NOT_FOUND,
-                        errorMessage = e.localizedMessage ?: "Unknown error"
+                        errorMessage = e.localizedMessage ?: LocalErrorCodes.DATABASE_ERROR.name
                     )
                 )
             )
         }
     }
+
 
     override suspend fun refreshUsers() {
         withContext(dispatcher) {

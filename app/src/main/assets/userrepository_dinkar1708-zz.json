@@ -1,0 +1,13 @@
+{
+  "userRepositories": [
+    {
+      "id": 1,
+      "name": "zz-kotlin-architecture",
+      "login": "dinkar1708-zz",
+      "type": "User",
+      "url": "https://api.github.com/users/dinkar1708-zz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14831652?v=4",
+      "description": "Kotlin exmaple"
+    }
+  ]
+}

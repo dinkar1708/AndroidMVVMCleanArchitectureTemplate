@@ -50,7 +50,7 @@ fun UserRepoListScreenContents(
         AppActionBarView(
             modifier = Modifier
                 .fillMaxWidth(),
-            headerText = selectedUser.login,
+            headerText = "${selectedUser.login} Repositories",
             showBackButton = true,
             onBackClick = onBackClick
         )
