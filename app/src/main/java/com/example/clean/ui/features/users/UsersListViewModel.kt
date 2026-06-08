@@ -22,8 +22,30 @@ class UsersListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(UsersListState())
     val uiState: StateFlow<UsersListState> = _uiState.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private var allUsers = listOf<com.example.clean.domain.model.User>()
+
     init {
         loadUsers()
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+        filterUsers(query)
+    }
+
+    private fun filterUsers(query: String) {
+        if (query.isBlank()) {
+            _uiState.value = _uiState.value.copy(userList = allUsers)
+        } else {
+            val filteredList = allUsers.filter { user ->
+                user.login.contains(query, ignoreCase = true) ||
+                user.type?.contains(query, ignoreCase = true) == true
+            }
+            _uiState.value = _uiState.value.copy(userList = filteredList)
+        }
     }
 
     private fun loadUsers() = viewModelScope.launch(dispatcher) {
@@ -32,6 +54,7 @@ class UsersListViewModel @Inject constructor(
         searchRepositoryUseCase.searchUsers().collectLatest { result ->
             when (result) {
                 is ResultState.Success -> {
+                    allUsers = result.data
                     _uiState.value = UsersListState(
                         userList = result.data,
                         isLoading = false
