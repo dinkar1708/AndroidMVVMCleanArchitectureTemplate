@@ -1,11 +1,9 @@
 package com.example.clean.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -19,57 +17,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.clean.ui.theme.AppElevation
 import com.example.clean.ui.theme.AppLightTheme
+import com.example.clean.ui.theme.AppSpacing
 
+/**
+ * Modern top app bar component
+ * Uses Material 3 design tokens and theme colors
+ */
 @Composable
 fun AppActionBarView(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     headerText: String,
     showBackButton: Boolean = true,
-    onBackClick: (() -> Unit) = {}
+    onBackClick: () -> Unit = {}
 ) {
-    Box(
+    Surface(
         modifier = modifier
-            .shadow(elevation = 1.dp)
-            .background(MaterialTheme.colorScheme.surface)
+            .fillMaxWidth()
+            .shadow(elevation = AppElevation.level1),
+        color = MaterialTheme.colorScheme.surface
     ) {
-        Column(
-            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.Start,
+        Row(
+            modifier = Modifier
+                .height(AppSpacing.appBarHeight)
+                .padding(horizontal = AppSpacing.extraSmall),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.padding(0.dp)
-            ) {
-                if (showBackButton) {
-                    IconButton(
-                        onClick = { onBackClick() }, modifier = Modifier.size(30.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                            modifier = Modifier.size(30.dp),
-                        )
-                    }
+            if (showBackButton) {
+                IconButton(
+                    onClick = onBackClick,
+                    modifier = Modifier.size(AppSpacing.buttonHeight)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "Navigate back",
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(AppSpacing.iconSize)
+                    )
                 }
-
-                Text(
-                    text = headerText,
-                    textAlign = TextAlign.Start,
-                    style = TextStyle(color = Color.White, fontSize = 20.sp),
-                    modifier = if (showBackButton) Modifier.padding(horizontal = 40.dp) else Modifier
-                )
             }
 
+            Text(
+                text = headerText,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(
+                    start = if (showBackButton) AppSpacing.small else AppSpacing.medium
+                )
+            )
         }
     }
 }

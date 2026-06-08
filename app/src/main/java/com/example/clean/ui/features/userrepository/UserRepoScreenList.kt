@@ -1,85 +1,131 @@
 package com.example.clean.ui.features.userrepository
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.clean.domain.model.User
 import com.example.clean.domain.model.UserRepo
+import com.example.clean.ui.components.AppChip
+import com.example.clean.ui.theme.AppElevation
 import com.example.clean.ui.theme.AppLightTheme
+import com.example.clean.ui.theme.AppSpacing
 
+/**
+ * Modern repository list with card-based design
+ * Following Material 3 guidelines and top apps UI patterns
+ */
 @Composable
-fun UserRepoListScreen(modifier: Modifier, repositories: List<UserRepo>, user: User) {
-    LazyColumn(modifier = modifier) {
+fun UserRepoListScreen(
+    modifier: Modifier = Modifier,
+    repositories: List<UserRepo>,
+    user: User
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = PaddingValues(AppSpacing.medium),
+        verticalArrangement = Arrangement.spacedBy(AppSpacing.medium)
+    ) {
         items(repositories) { repository ->
-            RepositoryListItem(
-                userRepo = repository
-            )
+            RepositoryListItem(userRepo = repository)
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+/**
+ * Modern repository card item with elevated design
+ */
 @Composable
 fun RepositoryListItem(userRepo: UserRepo) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        shape = RoundedCornerShape(8.dp),
+    ElevatedCard(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = AppElevation.level1
+        )
     ) {
-        Row(
+        Column(
             modifier = Modifier
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth()
+                .padding(AppSpacing.medium)
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 16.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppSpacing.small)
             ) {
-                Text(
-                    text = userRepo.login,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    ),
+                Icon(
+                    imageVector = Icons.Default.Folder,
+                    contentDescription = "Repository",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(AppSpacing.iconSize)
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = userRepo.login,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                AppChip(
+                    text = userRepo.type,
+                    selected = false
+                )
+            }
+
+            if (userRepo.description.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(AppSpacing.small))
 
                 Text(
                     text = userRepo.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
             }
 
-            Text(
-                text = userRepo.type,
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.labelSmall,
-            )
+            if (userRepo.url.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(AppSpacing.small))
+
+                Text(
+                    text = userRepo.url,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

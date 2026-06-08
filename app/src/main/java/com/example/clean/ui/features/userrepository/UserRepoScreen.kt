@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.clean.domain.model.User
 import com.example.clean.domain.model.UserRepo
@@ -20,7 +19,6 @@ import com.example.clean.ui.components.AppActionBarView
 import com.example.clean.ui.components.StateContentBox
 import com.example.clean.ui.theme.AppLightTheme
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UserRepoScreen(
     viewModel: UserRepoScreenViewModel, onBackClick: () -> Unit
@@ -62,10 +60,8 @@ fun UserRepoListScreenContents(
             errorMessage = errorMessage
         ) {
             UserRepoListScreen(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(), repositories = repositories, user = selectedUser
+                repositories = repositories,
+                user = selectedUser
             )
         }
     }

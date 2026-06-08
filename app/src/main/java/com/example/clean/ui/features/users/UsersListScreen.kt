@@ -11,14 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.clean.domain.model.User
 import com.example.clean.ui.components.AppActionBarView
 import com.example.clean.ui.components.StateContentBox
 import com.example.clean.ui.theme.AppLightTheme
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UsersListScreen(
     viewModel: UsersListViewModel,
@@ -55,14 +53,11 @@ fun UsersListScreenContent(
         )
 
         StateContentBox(
-//            modifier = Modifier.weight(4f),
+            modifier = Modifier.fillMaxSize(),
             isLoading = isLoading,
             errorMessage = errorMessage
         ) {
             UsersListView(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
                 userList = userList,
                 onItemClick = onItemClick
             )

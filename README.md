@@ -1,15 +1,133 @@
-# MVVM Architecture
+# Android MVVM Clean Architecture Template
+
+A modern Android application template built with Clean Architecture, MVVM pattern, and Material 3 Design.
+
+## 🚀 Quick Start
+
+### Run the Application
+
+```bash
+# Using Gradle Wrapper (Recommended)
+./gradlew assembleDebug
+
+# Install on connected device/emulator
+./gradlew installDebug
+
+# Build and install in one command
+./gradlew build installDebug
+
+# Run the app directly
+./gradlew run
+```
+
+### Run Test Cases
+
+```bash
+# Run all unit tests
+./gradlew test
+
+# Run all unit tests with detailed output
+./gradlew test --info
+
+# Run specific test class
+./gradlew test --tests "com.example.clean.data.repository.SearchRepositoryImplTest"
+
+# Run all tests including instrumented tests
+./gradlew connectedAndroidTest
+
+# Generate test coverage report
+./gradlew jacocoTestReport
+
+# Run tests and show results in browser
+./gradlew test && open app/build/reports/tests/testDebugUnitTest/index.html
+```
+
+### Clean and Rebuild
+
+```bash
+# Clean build artifacts
+./gradlew clean
+
+# Clean and rebuild
+./gradlew clean build
+
+# Clean and assemble
+./gradlew clean assembleDebug
+```
+
+---
+
+## 📱 Features
+
+### New UI Features
+- **Modern Splash Screen** - Animated logo with gradient background
+- **Home Screen with Tabs** - Bottom navigation with Users and Settings tabs
+- **Settings Screen** - Dark mode toggle, notifications, language, and more
+- **Enhanced UI Components** - Modern cards, buttons, chips, and state indicators
+
+### Core Features
+- **Github Users List** - Browse GitHub users with modern card-based UI
+- **User Repositories** - View repositories for selected users
+- **Error Handling** - Comprehensive error states with retry functionality
+- **Loading States** - Beautiful animated loading indicators
+
+## 🎨 Design System
+
+### Minimal Color Palette (5-7 colors)
+- **Primary**: #0066FF - Vibrant blue for main actions
+- **Accent**: #10B981 - Teal/green for success states
+- **Error**: #EF4444 - Red for errors
+- **Surface/Background**: Clean whites and grays
+- **Text**: Dark slate for light mode, light for dark mode
+
+All colors are centralized in `ui/theme/Color.kt`
+
+### Typography Scale
+Complete Material 3 typography system defined in `ui/theme/Typography.kt`
+- Display, Headline, Title, Body, and Label styles
+- Optimized for readability
+
+### Spacing System
+4dp/8dp grid system in `ui/theme/Spacing.kt`
+- Semantic spacing (small, medium, large)
+- Component-specific spacing
+
+### Shape System
+Consistent corner radius in `ui/theme/Shape.kt`
+- 5 size variants (extraSmall to extraLarge)
+
+## 🏗️ Architecture
+
+### Technology Stack
+- **Architecture**: Clean Architecture + MVVM
+- **UI**: Jetpack Compose with Material 3
+- **Dependency Injection**: Hilt/Dagger
+- **Async**: Kotlin Coroutines & Flow
+- **Database**: Room
+- **Navigation**: Jetpack Navigation Compose
+- **Testing**: JUnit, MockK
+
+### Project Structure
+```
+app/
+├── data/           # Data layer (repositories, data sources)
+├── domain/         # Business logic (models, use cases)
+├── di/             # Dependency injection modules
+└── ui/             # Presentation layer
+    ├── theme/      # Design system (colors, typography, spacing)
+    ├── components/ # Reusable UI components
+    └── features/   # Feature screens
+        ├── splash/
+        ├── home/
+        ├── users/
+        ├── userrepository/
+        └── settings/
+```
 
 ## TODO
 - Complete all test cases functions
 - Use API for Features
 - Fix Search Repository when selecting the second user
-
-## Technology
-- Android room local database
-- Android MVVM Architecture
-- Android State Flow
-- Android ViewModel
 
 
 # Features
