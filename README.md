@@ -2,6 +2,12 @@
 
 A modern Android application template built with Clean Architecture, MVVM pattern, and Material 3 Design.
 
+## Screens
+<img width="260" height="600" alt="Screenshot_1781061416" src="https://github.com/user-attachments/assets/ba5125fe-467e-4fa8-8744-d464716eeef2" />
+<img width="260" height="600" alt="Screenshot_1781061428" src="https://github.com/user-attachments/assets/b0706df5-9aec-44fc-b706-2b790914712c" />
+
+<img width="260" height="600" alt="Screenshot_1781061435" src="https://github.com/user-attachments/assets/aa286b5c-a33b-4ffb-b812-dc9e41cecae7" />
+
 ## 🚀 Quick Start
 
 ### Run the Application
@@ -134,12 +140,10 @@ app/
 ## Github Users List by given name
 - Show Users from Local
 - TODO load user from github api
-  <img width="200" alt="Screenshot 2024-03-09 at 1 41 14" src="https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/b528827b-7729-4d5c-ae89-a1f004ff01cf">
 
 ## Show repositories list for selected user
 - Show Repositories of Selected User from Local
 - TODO load repository from github api
-  <img width="200" alt="Screenshot 2024-03-09 at 1 41 01" src="https://github.com/dinkar1708/AndroidMVVMCleanArchitectureTemplate/assets/14831652/7364bf51-5f6e-4b95-b53e-5133233d6ca5">
 
 ## Mock Data for Testing
 - Documentation https://mockk.io/
